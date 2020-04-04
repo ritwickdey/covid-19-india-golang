@@ -1,5 +1,5 @@
 
-## COVID-19 India (Server - golang)
+## COVID-19 India (Server - Golang)
 Redefined Official COVID-19 Stats Website
 
 `Data is periodontally collected from Official Website`
