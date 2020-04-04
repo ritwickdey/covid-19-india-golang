@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/ritwickdey/covid-19-india-go-lang/model"
+	"github.com/ritwickdey/covid-19-india-golang/model"
 )
 
 type Covid19DataParser interface {

@@ -1,4 +1,4 @@
-module github.com/ritwickdey/covid-19-india-go-lang
+module github.com/ritwickdey/covid-19-india-golang
 
 go 1.12
 

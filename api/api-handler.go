@@ -1,6 +1,6 @@
 package api
 
-import "github.com/ritwickdey/covid-19-india-go-lang/model"
+import "github.com/ritwickdey/covid-19-india-golang/model"
 
 type Service interface {
 	FetchAllData() (model.Covid19StatMapDateWise, error)

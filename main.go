@@ -2,20 +2,31 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
-	"github.com/ritwickdey/covid-19-india-go-lang/api"
-	"github.com/ritwickdey/covid-19-india-go-lang/model"
-	"github.com/ritwickdey/covid-19-india-go-lang/parser"
+	"github.com/ritwickdey/covid-19-india-golang/api"
+	"github.com/ritwickdey/covid-19-india-golang/model"
+	"github.com/ritwickdey/covid-19-india-golang/parser"
 )
 
 var WEB_END_POINT = "https://www.mohfw.gov.in"
 var FILE_PATH = "./output-stats.json"
 
 func main() {
+
+	args := os.Args[1:]
+
+	if len(args) > 0 {
+		FILE_PATH = args[0]
+	}
+
+	fmt.Println(FILE_PATH)
+
 	exitingData, err := readExistingData()
 	throwIfErr(err)
 	model.DataCache.UpdateCache(exitingData)
@@ -54,7 +65,8 @@ func fetchDataPeriodically() {
 }
 
 func dataParserFromOfficialSite() model.Covid19StatMapDateWise {
-	todayKey := time.Now().Format("02-01-2006")
+	loc, _ := time.LoadLocation("Asia/Kolkata")
+	todayKey := time.Now().In(loc).Format("02-01-2006")
 	p := parser.NewCovid19DataParser()
 	currentData, err := p.DownloadAndParse(WEB_END_POINT)
 	throwIfErr(err)
