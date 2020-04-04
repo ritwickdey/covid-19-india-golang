@@ -1,8 +1,8 @@
 
 ## COVID-19 India (Server - golang)
-Redefined Offical COVID-19 Stats Website
+Redefined Official COVID-19 Stats Website
 
-`Data is periodontally collected from Offical Website`
+`Data is periodontally collected from Official Website`
 
 Frontend: https://github.com/ritwickdey/covid-19-india-react
 
