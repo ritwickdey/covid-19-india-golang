@@ -43,10 +43,19 @@ func main() {
 }
 
 func CORS(h http.Handler) http.Handler {
+
+	sites := make(map[string]string)
+	sites["https://novelcoronaindia.info"] = "https://novelcoronaindia.info"
+	sites["http://localhost:3000"] = "http://localhost:3000"
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "https://novelcoronaindia.info, http://localhost:3000")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
+
+		origin := r.Header.Get("Origin")
+		if sites[origin] != "" {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
+		}
 
 		if r.Method == "OPTIONS" {
 			return
