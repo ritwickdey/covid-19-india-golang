@@ -1,6 +1,6 @@
 
 ## COVID-19 India (Server - Golang)
-Redefined Official COVID-19 Stats Website
+Refined Stats From COVID-19 Official Website
 
 `Data is periodontally collected from Official Website`
 
