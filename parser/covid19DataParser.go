@@ -45,7 +45,7 @@ func (c *covid19DataParser) ParseFromReader(r io.Reader) (model.Covid19StatMap, 
 
 	fmt.Println(trLen)
 
-	for i := 0; i < 30; i++ { // 30 row data
+	for i := 0; i < 31; i++ { // 31 row data
 		c.processTRSelection(i, tr)
 		tr = tr.Next()
 	}
