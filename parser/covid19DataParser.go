@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/ritwickdey/covid-19-india-golang/model"
@@ -43,10 +44,16 @@ func (c *covid19DataParser) ParseFromReader(r io.Reader) (model.Covid19StatMap, 
 	tr := tableHtml.Find("tr")
 	trLen := tr.Length()
 
-	fmt.Println(trLen)
+	fmt.Println("Total tr: ", trLen)
 
-	for i := 0; i < 32; i++ { // 32 row data
+	for i := 0; i < trLen; i++ {
 		c.processTRSelection(i, tr)
+
+		//I know it's BAD. but I've no other workaround. :| ...
+		if strings.ToLower(strings.Replace(c.currentParsedData.StateName, " ", "", -1)) == "westbengal" {
+			break
+		}
+
 		tr = tr.Next()
 	}
 
