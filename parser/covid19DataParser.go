@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -68,7 +69,10 @@ func (c *covid19DataParser) processTRSelection(index int, selection *goquery.Sel
 
 }
 func (c *covid19DataParser) processTDSelection(index int, selection *goquery.Selection) {
-	text := selection.Text()
+
+	re := regexp.MustCompile(`\*|\#`)
+	text := re.ReplaceAllString(selection.Text(), "")
+
 	switch index {
 	case 0:
 		break
