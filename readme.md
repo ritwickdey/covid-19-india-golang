@@ -16,7 +16,7 @@ Refined Stats From COVID-19 Official Website
 
 Note:
 1. Accepted date format: `DD-MM-YYYY` (eg. `18-04-2020`)
-2. Date available from `03-04-2020`
+2. Data available from `03-04-2020`
 
 Frontend Code: https://github.com/ritwickdey/covid-19-india-react
 
