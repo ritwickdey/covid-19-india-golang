@@ -28,7 +28,7 @@ Refined Stats From COVID-19 Official Website
          "confirmed": 1000,
          "recovered": 500,
          "death": 5,
-         "active": 499,
+         "active": 495,
          "stateWise": [
            {
              "stateName": "West Bengal",
