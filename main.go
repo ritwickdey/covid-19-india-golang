@@ -27,9 +27,9 @@ func main() {
 
 	fmt.Println(FILE_PATH)
 
-	exitingData, err := readExistingData()
+	existingData, err := readExistingData()
 	throwIfErr(err)
-	model.DataCache.UpdateCache(exitingData)
+	model.DataCache.UpdateCache(existingData)
 	go fetchDataPeriodically()
 
 	service := api.NewService()
