@@ -20,7 +20,7 @@ Refined Stats From COVID-19 Official Website
    - `/covid19/formattedData?startDate=15-05-2020&endDate=21-05-2020`
    - Sample Response
 
-   ```json
+   ```js
    {
      "data": [
        {
