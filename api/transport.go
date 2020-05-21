@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
+	"github.com/ritwickdey/covid-19-india-golang/model"
 )
 
 func MakeGetAllStatsEndpoint(s Service) endpoint.Endpoint {
@@ -28,6 +30,13 @@ func MakeGetStatsByDateRangeEndpoint(s Service) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		var dates = request.([]string)
 		return s.FetchByDateRange(dates[0], dates[1])
+	}
+}
+
+func MakeGetFormattedStatsEndpoint(s Service) endpoint.Endpoint {
+	return func(_ context.Context, request interface{}) (interface{}, error) {
+		var dates = request.([]time.Time)
+		return s.FetchByDateRangeFormated(dates[0], dates[1])
 	}
 }
 
@@ -56,6 +65,33 @@ func DecodeGetStatsByDateRangeReq(_ context.Context, r *http.Request) (interface
 		return nil, errors.New("end date is missing")
 	}
 	dates := []string{startDate, endDate}
+	return dates, nil
+}
+
+func DecodeGetFormattedStatsReq(_ context.Context, r *http.Request) (interface{}, error) {
+
+	startDateStr := r.FormValue("startDate")
+	endDateStr := r.FormValue("endDate")
+
+	if startDateStr == "" {
+		startDateStr = `03-04-2020`
+	}
+
+	startDate, err := time.Parse(model.DateFormatPattern, startDateStr)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var endDate time.Time = time.Now()
+
+	if endDateStr != "" {
+		if endDate, err = time.Parse(model.DateFormatPattern, endDateStr); err != nil {
+			return nil, err
+		}
+	}
+
+	dates := []time.Time{startDate, endDate}
 	return dates, nil
 }
 
@@ -92,6 +128,17 @@ func MakeHTTPHandler(s Service) http.Handler {
 			options...,
 		),
 	)
+
+	r.Methods("GET").Path("/covid19/formattedData").
+		// Queries("startDate", "{startDate}").
+		// Queries("endDate", "{endDate}").
+		Handler(
+			httptransport.NewServer(MakeGetFormattedStatsEndpoint(s),
+				DecodeGetFormattedStatsReq,
+				EncodeResponse,
+				options...,
+			),
+		)
 
 	return r
 }

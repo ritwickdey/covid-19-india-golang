@@ -29,3 +29,26 @@ func (d *dataCacheStruct) GetCache() Covid19StatMapDateWise {
 }
 
 var DataCache dataCacheStruct = dataCacheStruct{}
+
+type FormatedStatResult struct {
+	Data []FormatedStatData `json:"data"`
+}
+
+type FormatedStatData struct {
+	Date      string                      `json:"date"`
+	Confirmed int                         `json:"confirmed"`
+	Recovered int                         `json:"recovered"`
+	Death     int                         `json:"death"`
+	Active    int                         `json:"active"`
+	StateWise []StateWiseFormatedStatData `json:"stateWise"`
+}
+
+type StateWiseFormatedStatData struct {
+	StateName string `json:"stateName"`
+	Confirmed int    `json:"confirmed"`
+	Recovered int    `json:"recovered"`
+	Death     int    `json:"death"`
+	Active    int    `json:"active"`
+}
+
+const DateFormatPattern = "02-01-2006"
