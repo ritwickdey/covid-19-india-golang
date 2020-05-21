@@ -40,7 +40,7 @@ Refined Stats From COVID-19 Official Website
            // more state data
          ],
        },
-    // more data wise data
+    // more date wise data
      ];
    }
    ```
