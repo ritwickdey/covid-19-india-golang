@@ -52,6 +52,18 @@ func (c *covid19DataParser) ParseFromReader(r io.Reader) (model.Covid19StatMap, 
 
 		//I know it's BAD. but I've no other workaround. :| ...
 		if strings.ToLower(strings.Replace(c.currentParsedData.StateName, " ", "", -1)) == "westbengal" {
+			tr = tr.Next()
+
+			isReassigned := strings.Contains(tr.Find("td:nth-child(2)").Text(), "reassigned")
+			if isReassigned {
+				other := c.processTRSelection(i, tr)
+
+				delete(c.data, other.StateName)
+				other.StateName = "Other"
+				c.data["Other"] = other
+
+			}
+
 			break
 		}
 
@@ -61,13 +73,16 @@ func (c *covid19DataParser) ParseFromReader(r io.Reader) (model.Covid19StatMap, 
 	return c.data, err
 }
 
-func (c *covid19DataParser) processTRSelection(index int, selection *goquery.Selection) {
+func (c *covid19DataParser) processTRSelection(index int, selection *goquery.Selection) model.Covid19Stat {
 	c.currentParsedData = model.Covid19Stat{}
 	selection.Find("td").Each(c.processTDSelection)
 
 	c.data[c.currentParsedData.StateName] = c.currentParsedData
 
+	return c.currentParsedData
+
 }
+
 func (c *covid19DataParser) processTDSelection(index int, selection *goquery.Selection) {
 
 	re := regexp.MustCompile(`\*|\#`)
@@ -81,7 +96,7 @@ func (c *covid19DataParser) processTDSelection(index int, selection *goquery.Sel
 		break
 	case 2:
 		i, _ := strconv.Atoi(text)
-		c.currentParsedData.ConfirmedCase = i
+		c.currentParsedData.ActiveCase = i
 		break
 	case 3:
 		i, _ := strconv.Atoi(text)
@@ -90,6 +105,9 @@ func (c *covid19DataParser) processTDSelection(index int, selection *goquery.Sel
 	case 4:
 		i, _ := strconv.Atoi(text)
 		c.currentParsedData.Death = i
+	case 5:
+		i, _ := strconv.Atoi(text)
+		c.currentParsedData.ConfirmedCase = i
 		break
 	}
 }

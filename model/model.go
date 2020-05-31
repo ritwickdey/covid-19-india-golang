@@ -7,6 +7,7 @@ type Covid19StatMapDateWise map[string]Covid19StatMap
 type Covid19Stat struct {
 	StateName     string `json:"stateName"`
 	ConfirmedCase int    `json:"confirmed"`
+	ActiveCase    int    `json:"-"`
 	Cured         int    `json:"recovered"`
 	Death         int    `json:"death"`
 }
