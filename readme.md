@@ -52,4 +52,12 @@ Note:
 
 Frontend Code: https://github.com/ritwickdey/covid-19-india-react
 
+## Incidents
+
+- `30-05-2020`
+  - What?
+    - Wrong `CONFIRMED` & `ACTIVE` case data for `30-05-2020`. I added an avg value for `30-05-2020`.
+  - Why?
+    - HTML of mohfw.gov.in was changed
+
 [MIT Licence](./LICENCE)
