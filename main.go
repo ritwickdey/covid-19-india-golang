@@ -76,7 +76,7 @@ func fetchDataPeriodically() {
 func dataParserFromOfficialSite() model.Covid19StatMapDateWise {
 	loc, _ := time.LoadLocation("Asia/Kolkata")
 	todayKey := time.Now().In(loc).Format("02-01-2006")
-	p := parser.NewCovid19DataParser()
+	p := parser.NewCovid19APIParser()
 	currentData, err := p.DownloadAndParse(WEB_END_POINT)
 	throwIfErr(err)
 

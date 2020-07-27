@@ -14,7 +14,6 @@ import (
 
 type Covid19DataParser interface {
 	DownloadAndParse(url string) (model.Covid19StatMap, error)
-	ParseFromReader(r io.Reader) (model.Covid19StatMap, error)
 }
 
 func NewCovid19DataParser() Covid19DataParser {
